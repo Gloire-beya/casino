@@ -12,4 +12,4 @@ All the features are working fine. The following are the URIs to access the deve
 
 The promotion feature (bonus) was added and it's working correctly. 
 
-**Note: When starting the application for the first time, it creates three different users. **
+**Note: When starting the application for the first time, it creates three different users. 
