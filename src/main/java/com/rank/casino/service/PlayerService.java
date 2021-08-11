@@ -10,13 +10,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class PlayerService {
     private final PlayerRepo playerRepo;
     private final PlayerTransactionRepo transactionRepo;
@@ -35,6 +35,7 @@ public class PlayerService {
         }
     }
 
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     private PlayerTransaction saveTransaction(double wager, double winning_amount, Player player) {
         var transaction = new PlayerTransaction(wager, winning_amount, player);
         return transactionRepo.save(transaction);
@@ -68,6 +69,7 @@ public class PlayerService {
 
     }
 
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public PlayerTransaction winning(Long id, double wager) {
         Optional<Player> optionalPlayer = playerRepo.findById(id);
         if (optionalPlayer.isPresent()) {
