@@ -1,6 +1,5 @@
 package com.rank.casino.controller;
 
-import com.rank.casino.exception.PlayerNotFoundException;
 import com.rank.casino.model.PlayerTransaction;
 import com.rank.casino.service.PlayerService;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +19,7 @@ public class PlayerController {
 
     @GetMapping(value = "/balances/{id}")
     public double getBalanceOfPlayer(@PathVariable Long id) {
-
-        double balanceOfPlayer = playerService.getBalanceOfPlayer(id);
-        if (balanceOfPlayer == 0.0) throw new PlayerNotFoundException();
-        return balanceOfPlayer;
+        return playerService.getBalanceOfPlayer(id);
     }
 
     @PostMapping(value = "/wagers/{wager}/{id}")
