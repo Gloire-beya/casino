@@ -35,12 +35,12 @@ public class PlayerService {
         }
     }
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)
     private PlayerTransaction saveTransaction(double wager, double winning_amount, Player player) {
         var transaction = new PlayerTransaction(wager, winning_amount, player);
         return transactionRepo.save(transaction);
     }
-
+    
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public PlayerTransaction wagering(Long id, double wager) {
         Optional<Player> optionalPlayer = playerRepo.findById(id);
         if (optionalPlayer.isPresent() && !optionalPlayer.get().isPromoCodeOn()) {
