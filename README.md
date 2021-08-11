@@ -9,3 +9,5 @@ All the features are working fine. The following are the URIs to access the deve
 * http://localhost:8080/players/wins/{wager}/{id}
 * http://localhost:8080/players/playertx/{username}
 ---
+
+The promotion feature (bonus) was added and it's working correctly. 
