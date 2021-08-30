@@ -31,7 +31,7 @@ public class PlayerService {
         if (optionalPlayer.isPresent()) {
             return playerRepo.findBalanceOfPlayer(id);
         } else {
-            throw new PlayerNotFoundException();
+            throw new PlayerNotFoundException("Player with ID "+ id + " not found");
         }
     }
 
@@ -39,7 +39,7 @@ public class PlayerService {
         var transaction = new PlayerTransaction(wager, winning_amount, player);
         return transactionRepo.save(transaction);
     }
-    
+
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public PlayerTransaction wagering(Long id, double wager) {
         Optional<Player> optionalPlayer = playerRepo.findById(id);
@@ -47,7 +47,7 @@ public class PlayerService {
             Player player = optionalPlayer.get();
             double balance = player.getBalance();
 
-            if (balance < wager) throw new InsufficientBalanceException();
+            if (balance < wager) throw new InsufficientBalanceException("Insufficient balance!");
 
             player.setBalance(balance - wager);
 
@@ -64,7 +64,7 @@ public class PlayerService {
             return saveTransaction(wager, 0.0, player);
 
         } else {
-            throw new PlayerNotFoundException();
+            throw new PlayerNotFoundException("Player with ID "+ id + " not found");
         }
 
     }
@@ -75,7 +75,7 @@ public class PlayerService {
         if (optionalPlayer.isPresent()) {
             Player player = optionalPlayer.get();
             double balance = player.getBalance();
-            if (balance < wager) throw new InsufficientBalanceException();
+            if (balance < wager) throw new InsufficientBalanceException("Insufficient balance!");
 
             double wining_amount = wager * 40_000;
             balance = balance - wager + wining_amount;
@@ -85,7 +85,7 @@ public class PlayerService {
 
             return saveTransaction(wager, wining_amount, player);
         } else {
-            throw new PlayerNotFoundException();
+            throw new PlayerNotFoundException("Player with ID "+ id + " not found");
         }
     }
 
